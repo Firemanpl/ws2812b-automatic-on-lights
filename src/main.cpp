@@ -591,7 +591,7 @@ void loop()
     rainbow_off1();
   }
 
-  if (analogRead(A0) <= 15 && lock3 == 0 && digitalRead(pcstate) == 1) //max 1024 && photoresistor
+  if (analogRead(A0) <= 20 && lock3 == 0 && digitalRead(pcstate) == 1) //max 1024 && photoresistor
   {
     if (lock_button1 == 1)
     {
