@@ -62,7 +62,12 @@ bool lock, lock1, lock2, lock3, lock6, lock7, lock8, lock11, lock12, lock13, loc
 bool lock4 = 1;
 bool lock_button1, lock_button2;
 bool onoff1, onoff;
-
+int rVal = 254;
+int gVal = 1;
+int bVal = 127;
+int rDir = -1;
+int gDir = 1;
+int bDir = -1;
 void setup()
 {
   Serial.begin(115200);
@@ -212,14 +217,14 @@ void fade_on1()
     {
       if (g <= NUM_LEDSs - 2)
       {
-        ledss[g] = CHSV(hue, 255, 255);
+        ledss[g] = CRGB(rVal, gVal, bVal);
         g++;
       }
       savedtime14 = actualtime;
     }
     for (int b = 0; b <= g; b++)
     {
-      ledss[b] = CHSV(hue, 255, 255);
+      ledss[b] = CRGB(rVal, gVal, bVal);
     }
     if (actualtime - savedtime15 >= deldel1)
     {
@@ -300,6 +305,10 @@ void fade_off1()
     }
     savedtime14 = actualtime;
   }
+    for (int b = 0; b <= g; b++)
+  {
+    ledss[b] = CRGB(rVal, gVal, bVal);
+  }
   delq1 = 0;
 }
 void rainbow_off1()
@@ -371,14 +380,14 @@ void fade_on()
     {
       if (i <= NUM_LEDS - 2)
       {
-        leds[i] = CHSV(hue, 255, 255);
+        leds[i] = CRGB(rVal, gVal, bVal);
         i++;
       }
       savedtime3 = actualtime;
     }
     for (int b = 0; b <= i; b++)
     {
-      leds[b] = CHSV(hue, 255, 255);
+      leds[b] = CRGB(rVal, gVal, bVal);
     }
     if (actualtime - savedtime4 >= deldel)
     {
@@ -461,7 +470,7 @@ void fade_off()
   }
   for (int b = 0; b <= i; b++)
   {
-    leds[b] = CHSV(hue, 255, 255);
+    leds[b] = CRGB(rVal, gVal, bVal);
   }
   delq = 10;
 }
@@ -669,19 +678,52 @@ void loop()
     lock19 = 0;
   }
   if (actualtime - savedtime11 >= 1000UL)
-  {
+  {/*
     Serial.print("Photoresistor: ");
     Serial.print(analogRead(A0));
     Serial.println(" ");
     Serial.print("PC_state: ");
     Serial.print(digitalRead(pcstate));
     Serial.println(" ");
+    */
     FastLED.setBrightness(brightness);
     savedtime11 = actualtime;
   }
   if (actualtime - savedtime16 >= delayfade && mode == 2)
   {
-    hue++;
+    //hue++;
+    rVal = rVal + rDir;
+    gVal = gVal + gDir;
+    bVal = bVal + bDir;
+   
+    // for each color, change direction if
+    // you reached 0 or 255
+    if (rVal >= 255 || rVal <= 0)
+    {
+      rDir = rDir * -1;
+    }
+
+    if (gVal >= 255 || gVal <= 0)
+    {
+      gDir = gDir * -1;
+    }
+
+    if (bVal >= 255 || bVal <= 0)
+    {
+      bDir = bDir * -1;
+    }
+        Serial.print("Red: ");
+    Serial.print(rVal);
+    Serial.println(" ");
+    Serial.print("Green: ");
+    Serial.print(gVal);
+    Serial.println("");
+    Serial.print("Blue: ");
+    Serial.print(bVal);
+    Serial.println(" ");
+    //Blynk.virtualWrite(V1,rVal);
+    //Blynk.virtualWrite(V2,gVal);
+    //Blynk.virtualWrite(V3,bVal);
     savedtime16 = actualtime;
   }
   FastLED.show();
