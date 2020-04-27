@@ -674,53 +674,66 @@ void loop()
     lock19 = 0;
   }
   if (actualtime - savedtime11 >= 1000UL)
-  { /*
+  {
     Serial.print("Photoresistor: ");
     Serial.print(analogRead(A0));
     Serial.println(" ");
     Serial.print("PC_state: ");
     Serial.print(digitalRead(pcstate));
     Serial.println(" ");
-    */
+    if (mode == 2 && onoff == 1 || mode == 2 && onoff1 == 1)
+    {
+      Serial.print("R:");
+      Serial.print(rVal);
+      Serial.print(" ");
+      Serial.print("G:");
+      Serial.print(gVal);
+      Serial.print(" ");
+      Serial.print("B:");
+      Serial.print(bVal);
+      Serial.println(" ");
+    }
+    if (mode == 1 && onoff == 1 || mode == 1 && onoff1 == 1)
+    {
+      Serial.print("R:");
+      Serial.print(red);
+      Serial.print(" ");
+      Serial.print("G:");
+      Serial.print(green);
+      Serial.print(" ");
+      Serial.print("B:");
+      Serial.print(blue);
+      Serial.println(" ");
+    }
     FastLED.setBrightness(brightness);
     savedtime11 = actualtime;
   }
-  if (actualtime - savedtime16 >= delayfade && mode == 2 && onoff==1 || actualtime - savedtime16 >= delayfade && mode == 2 && onoff1==1)
+  if (actualtime - savedtime16 >= delayfade && mode == 2 && onoff == 1 || actualtime - savedtime16 >= delayfade && mode == 2 && onoff1 == 1)
   {
-    if (rVal == 255 && gVal < 255 && bVal==0) //red (255,0,0) -> yellow (255,255,0)
+    if (rVal == 255 && gVal < 255 && bVal == 0) //red (255,0,0) -> yellow (255,255,0)
     {
       gVal++;
     }
-    else if (rVal>0 && gVal==255 && bVal==0) //yellow (255,255,0) -> green ->(0,255,0)
+    else if (rVal > 0 && gVal == 255 && bVal == 0) //yellow (255,255,0) -> green ->(0,255,0)
     {
       rVal--;
     }
-    else if (rVal==0 && gVal==255 && bVal<255) //green (0,255,0) -> cyan (0,255,255)
+    else if (rVal == 0 && gVal == 255 && bVal < 255) //green (0,255,0) -> cyan (0,255,255)
     {
       bVal++;
-    }else if (rVal==0 && gVal>0 && bVal==255) //cyan (0,255,255)-> blue (0,0,255)
+    }
+    else if (rVal == 0 && gVal > 0 && bVal == 255) //cyan (0,255,255)-> blue (0,0,255)
     {
       gVal--;
-    }else if (rVal<255 && gVal==0 && bVal==255) //blue (0,0,255) -> magenta (255,0,255)
+    }
+    else if (rVal < 255 && gVal == 0 && bVal == 255) //blue (0,0,255) -> magenta (255,0,255)
     {
       rVal++;
-    }else if (rVal==255 && gVal==0 && bVal>0) //magenta (255,0,255) -> red (255,0,0)
+    }
+    else if (rVal == 255 && gVal == 0 && bVal > 0) //magenta (255,0,255) -> red (255,0,0)
     {
       bVal--;
     }
-
-    Serial.print("R:");
-    Serial.print(rVal);
-    Serial.print(" ");
-    Serial.print("G:");
-    Serial.print(gVal);
-    Serial.print(" ");
-    Serial.print("B:");
-    Serial.print(bVal);
-    Serial.println(" ");
-    //Blynk.virtualWrite(V1,rVal);
-    //Blynk.virtualWrite(V2,gVal);
-    //Blynk.virtualWrite(V3,bVal);
     savedtime16 = actualtime;
   }
   FastLED.show();
