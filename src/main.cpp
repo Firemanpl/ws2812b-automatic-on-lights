@@ -27,7 +27,6 @@ unsigned long delayfade;
 
 CRGB leds[NUM_LEDS];
 CRGB ledss[NUM_LEDSs];
-uint8_t hue = 0;
 uint8_t gHue = 0;
 uint8_t gHue1 = 0;
 
@@ -52,7 +51,7 @@ unsigned long savedtime12 = 0; //rgb
 unsigned long savedtime13 = 0; //rgb
 unsigned long savedtime14 = 0; //set rgb
 unsigned long savedtime15 = 0; //fade
-unsigned long savedtime16 = 0; //fade main hue++
+unsigned long savedtime16 = 0; //fade main
 unsigned long savedtime18 = 0; //off mode1
 unsigned long savedtime19 = 0; //rainbow
 unsigned long savedtime20 = 0; //rainbow
@@ -62,12 +61,9 @@ bool lock, lock1, lock2, lock3, lock6, lock7, lock8, lock11, lock12, lock13, loc
 bool lock4 = 1;
 bool lock_button1, lock_button2;
 bool onoff1, onoff;
-int rVal = 254;
-int gVal = 1;
-int bVal = 127;
-int rDir = -1;
-int gDir = 1;
-int bDir = -1;
+int rVal = 255; /* red led value is temporally 255 and it will be the first led to light up */
+int bVal;       /* blue led value is temporally 0 */
+int gVal;       /* green led value is temporally 0 */
 void setup()
 {
   Serial.begin(115200);
@@ -305,7 +301,7 @@ void fade_off1()
     }
     savedtime14 = actualtime;
   }
-    for (int b = 0; b <= g; b++)
+  for (int b = 0; b <= g; b++)
   {
     ledss[b] = CRGB(rVal, gVal, bVal);
   }
@@ -678,7 +674,7 @@ void loop()
     lock19 = 0;
   }
   if (actualtime - savedtime11 >= 1000UL)
-  {/*
+  { /*
     Serial.print("Photoresistor: ");
     Serial.print(analogRead(A0));
     Serial.println(" ");
@@ -691,34 +687,29 @@ void loop()
   }
   if (actualtime - savedtime16 >= delayfade && mode == 2)
   {
-    //hue++;
-    rVal = rVal + rDir;
-    gVal = gVal + gDir;
-    bVal = bVal + bDir;
-   
-    // for each color, change direction if
-    // you reached 0 or 255
-    if (rVal >= 255 || rVal <= 0)
+    if (rVal > 0 && bVal < 255 && gVal == 0) //red -> blue
     {
-      rDir = rDir * -1;
+      bVal++;
+      rVal--;
+    }
+    else if (bVal > 0 && gVal < 255 && rVal == 0) //blue -> green
+    {
+      gVal++;
+      bVal--;
+    }
+    else if (gVal > 0 && rVal < 255 && bVal == 0) //green -> red
+    {
+      rVal++;
+      gVal--;
     }
 
-    if (gVal >= 255 || gVal <= 0)
-    {
-      gDir = gDir * -1;
-    }
-
-    if (bVal >= 255 || bVal <= 0)
-    {
-      bDir = bDir * -1;
-    }
-        Serial.print("Red: ");
+    Serial.print("R:");
     Serial.print(rVal);
-    Serial.println(" ");
-    Serial.print("Green: ");
+    Serial.print(" ");
+    Serial.print("G:");
     Serial.print(gVal);
-    Serial.println("");
-    Serial.print("Blue: ");
+    Serial.print(" ");
+    Serial.print("B:");
     Serial.print(bVal);
     Serial.println(" ");
     //Blynk.virtualWrite(V1,rVal);
