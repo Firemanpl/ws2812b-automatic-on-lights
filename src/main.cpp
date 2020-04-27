@@ -685,22 +685,28 @@ void loop()
     FastLED.setBrightness(brightness);
     savedtime11 = actualtime;
   }
-  if (actualtime - savedtime16 >= delayfade && mode == 2)
+  if (actualtime - savedtime16 >= delayfade && mode == 2 && onoff==1 || actualtime - savedtime16 >= delayfade && mode == 2 && onoff1==1)
   {
-    if (rVal > 0 && bVal < 255 && gVal == 0) //red -> blue
-    {
-      bVal++;
-      rVal--;
-    }
-    else if (bVal > 0 && gVal < 255 && rVal == 0) //blue -> green
+    if (rVal == 255 && gVal < 255 && bVal==0) //red (255,0,0) -> yellow (255,255,0)
     {
       gVal++;
-      bVal--;
     }
-    else if (gVal > 0 && rVal < 255 && bVal == 0) //green -> red
+    else if (rVal>0 && gVal==255 && bVal==0) //yellow (255,255,0) -> green ->(0,255,0)
+    {
+      rVal--;
+    }
+    else if (rVal==0 && gVal==255 && bVal<255) //green (0,255,0) -> cyan (0,255,255)
+    {
+      bVal++;
+    }else if (rVal==0 && gVal>0 && bVal==255) //cyan (0,255,255)-> blue (0,0,255)
+    {
+      gVal--;
+    }else if (rVal<255 && gVal==0 && bVal==255) //blue (0,0,255) -> magenta (255,0,255)
     {
       rVal++;
-      gVal--;
+    }else if (rVal==255 && gVal==0 && bVal>0) //magenta (255,0,255) -> red (255,0,0)
+    {
+      bVal--;
     }
 
     Serial.print("R:");
