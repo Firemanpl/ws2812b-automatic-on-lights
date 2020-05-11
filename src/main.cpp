@@ -61,6 +61,7 @@ bool lock, lock1, lock2, lock4, lock6, lock7, lock8, lock11, lock12, lock13, loc
 bool lock3 = 1;
 bool lock_button1, lock_button2;
 bool onoff1, onoff;
+bool state_complete;
 int rVal = 255; /* red led value is temporally 255 and it will be the first led to light up */
 int bVal;       /* blue led value is temporally 0 */
 int gVal;       /* green led value is temporally 0 */
@@ -595,30 +596,39 @@ void loop()
   {
     rainbow_off1();
   }
-
-  if (analogRead(A0) <= 20 && lock3 == 0 && digitalRead(pcstate) == 1) //max 1024 && photoresistor
+  if (state_complete == 1)
   {
-    if (lock_button1 == 1)
+    if (analogRead(A0) <= 20 && lock3 == 0 && digitalRead(pcstate) == 1) //max 1024 && photoresistor
     {
-      onoff = 1;
+      if (lock_button1 == 1)
+      {
+        onoff = 1;
+      }
+      if (lock_button2 == 1)
+      {
+        onoff1 = 1;
+      }
+      lock3 = 1;
+      lock4 = 0;
     }
-    if (lock_button2 == 1)
+    else if (analogRead(A0) >= 100 && lock4 == 0 || digitalRead(pcstate) == 0 && lock4 == 0)
     {
-      onoff1 = 1;
+      onoff = 0;
+      onoff1 = 0;
+      lock3 = 0;
+      lock4 = 1;
     }
-    lock3 = 1;
-    lock4 = 0;
   }
-  else if (analogRead(A0) >= 100 && lock4 == 0 || digitalRead(pcstate) == 0 && lock4 == 0)
-  {
-    onoff = 0;
-    onoff1 = 0;
-    lock3 = 0;
-    lock4 = 1;
-  }
-
   if (digitalRead(ttp223) == HIGH)
   {
+    if (onoff == 0 || onoff1 == 0)
+    {
+      state_complete = 1;
+    }
+    else
+    {
+      state_complete = 0;
+    }
     if (lock_button1 == 1 || onoff == 1)
     {
       onoff = !onoff;
