@@ -57,8 +57,8 @@ unsigned long savedtime19 = 0; //rainbow
 unsigned long savedtime20 = 0; //rainbow
 unsigned long savedtime21 = 0; //rainbow- delay
 
-bool lock, lock1, lock2, lock3, lock6, lock7, lock8, lock11, lock12, lock13, lock14, lock15, lock16, lock17, lock18, lock19, lock20;
-bool lock4 = 1;
+bool lock, lock1, lock2, lock4, lock6, lock7, lock8, lock11, lock12, lock13, lock14, lock15, lock16, lock17, lock18, lock19, lock20;
+bool lock3 = 1;
 bool lock_button1, lock_button2;
 bool onoff1, onoff;
 int rVal = 255; /* red led value is temporally 255 and it will be the first led to light up */
@@ -94,6 +94,8 @@ void setup()
 
 BLYNK_CONNECTED()
 {
+  Blynk.virtualWrite(V8, LOW);
+  Blynk.virtualWrite(V9, LOW);
   Blynk.syncVirtual(V1);
   Blynk.syncVirtual(V2);
   Blynk.syncVirtual(V3);
@@ -101,8 +103,6 @@ BLYNK_CONNECTED()
   Blynk.syncVirtual(V5);
   Blynk.syncVirtual(V7);
   Blynk.syncVirtual(V6);
-  Blynk.syncVirtual(V9);
-  Blynk.syncVirtual(V8);
   Blynk.syncVirtual(V11);
   Blynk.syncVirtual(V10);
   Blynk.syncVirtual(V14);
