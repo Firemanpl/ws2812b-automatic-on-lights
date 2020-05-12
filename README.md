@@ -1,7 +1,7 @@
-# Automatic two strips leds ws2812b.
+# Automatic two led strips ws2812b.
 ## INSTRUCTIONS
                 
-1. I used Blynk to administration of my project.You must create your own local server or buy energy on an official server.
+1. I used Blynk to administration of my project. You must create your own local server or buy energy on an official server.
 2. QR code project:
 ![QR-code](/images/qr_code.jpg)
 3. Scheme:
