@@ -13,7 +13,7 @@
 int i = 0;
 int g = 0;
 int red, green, blue, mode;
-int brightness = 250;
+int brightness = 255;
 int led_end = 40;           //end animation led
 int led_end1 = 80;          //end animation led
 unsigned long delq = 10;    // start delay led_end
@@ -30,9 +30,9 @@ CRGB ledss[NUM_LEDSs];
 uint8_t gHue = 0;
 uint8_t gHue1 = 0;
 
-char auth[] = "PcGed1QmIraB4kAFjCwZ0Hq81aT710vS";
-char ssid[] = "Tenda";
-char pass[] = "kamil2k19";
+char auth[] = "PcGed1QmIraB4kAFjCwZ0Hq81aT710vS"; //token blynk
+char ssid[] = "Tenda"; //your id  wifi
+char pass[] = "kamil2k19"; //your password wifi
 char server[] = "192.168.0.105"; // IP for Local Cloud Server
 //char server[] = "blynk-cloud.com";  // URL for Blynk Cloud Server
 
