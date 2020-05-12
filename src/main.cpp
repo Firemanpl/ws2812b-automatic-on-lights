@@ -30,7 +30,7 @@ CRGB ledss[NUM_LEDSs];
 uint8_t gHue = 0;
 uint8_t gHue1 = 0;
 
-char auth[] = "1clhGNPZP3vpiu26OINn8OsdYTbdIpsS";
+char auth[] = "PcGed1QmIraB4kAFjCwZ0Hq81aT710vS";
 char ssid[] = "Tenda";
 char pass[] = "kamil2k19";
 char server[] = "192.168.0.105"; // IP for Local Cloud Server
@@ -61,7 +61,6 @@ bool lock, lock1, lock2, lock4, lock6, lock7, lock8, lock11, lock12, lock13, loc
 bool lock3 = 1;
 bool lock_button1, lock_button2;
 bool onoff1, onoff;
-bool state_complete;
 int rVal = 255; /* red led value is temporally 255 and it will be the first led to light up */
 int bVal;       /* blue led value is temporally 0 */
 int gVal;       /* green led value is temporally 0 */
@@ -596,8 +595,6 @@ void loop()
   {
     rainbow_off1();
   }
-  if (state_complete == 1)
-  {
     if (analogRead(A0) <= 20 && lock3 == 0 && digitalRead(pcstate) == 1) //max 1024 && photoresistor
     {
       if (lock_button1 == 1)
@@ -618,17 +615,9 @@ void loop()
       lock3 = 0;
       lock4 = 1;
     }
-  }
+
   if (digitalRead(ttp223) == HIGH)
   {
-    if (onoff == 0 || onoff1 == 0)
-    {
-      state_complete = 1;
-    }
-    else
-    {
-      state_complete = 0;
-    }
     if (lock_button1 == 1 || onoff == 1)
     {
       onoff = !onoff;
