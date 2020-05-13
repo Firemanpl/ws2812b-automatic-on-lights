@@ -1,12 +1,12 @@
 # Automatic two led strips ws2812b.
 ## INSTRUCTIONS
                 
-1. I used Blynk to administration of my project. You must create your own local server or buy energy on an official server.
+1. I used Blynk to administration of my project. You have to create your own local server or buy energy on an official server.
 2. QR code project:
 ![QR-code](/images/qr_code.jpg)
 3. Scheme:
 ![Schemat](/images/schemat.png)
-4. Upload code to esp8266.[link to code](https://github.com/Firemanpl/ws2812b-automatic-on-lights/blob/master/src/main.cpp) You can use arduino IDE or Visiual Studio Code with platorm IO.(If you can VS code with platform IO You can copy all project and paste as new project)
+4. Upload code to esp8266.[Link to the code](https://github.com/Firemanpl/ws2812b-automatic-on-lights/blob/master/src/main.cpp) You can use arduino IDE or Visual Studio Code with platorm IO. (If you are going to use VS code with platform IO you can copy the whole project and paste it as a new project)
 
                 
 ## You'll need:
