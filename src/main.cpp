@@ -12,6 +12,8 @@
 #define pcstate D2
 int i = 0;
 int g = 0;
+int x = 0;
+int y = 0;
 int red, green, blue, mode;
 int brightness = 255;
 int led_end = 40;           //end animation led
@@ -31,9 +33,9 @@ uint8_t gHue = 0;
 uint8_t gHue1 = 0;
 
 char auth[] = "PcGed1QmIraB4kAFjCwZ0Hq81aT710vS"; //token blynk
-char ssid[] = "Tenda"; //your id  wifi
-char pass[] = "kamil2k19"; //your password wifi
-char server[] = "192.168.0.105"; // IP for Local Cloud Server
+char ssid[] = "Tenda";                            //your id  wifi
+char pass[] = "kamil2k19";                        //your password wifi
+char server[] = "192.168.0.105";                  // IP for Local Cloud Server
 //char server[] = "blynk-cloud.com";  // URL for Blynk Cloud Server
 
 unsigned long actualtime = 0;
@@ -46,7 +48,6 @@ unsigned long savedtime8 = 0;  //rainbow
 unsigned long savedtime9 = 0;  //rainbow
 unsigned long savedtime10 = 0; //rainbow- delay
 unsigned long savedtime11 = 0; //onoff sync
-
 unsigned long savedtime12 = 0; //rgb
 unsigned long savedtime13 = 0; //rgb
 unsigned long savedtime14 = 0; //set rgb
@@ -56,10 +57,12 @@ unsigned long savedtime18 = 0; //off mode1
 unsigned long savedtime19 = 0; //rainbow
 unsigned long savedtime20 = 0; //rainbow
 unsigned long savedtime21 = 0; //rainbow- delay
-
-bool lock, lock1, lock2, lock4, lock6, lock7, lock8, lock11, lock12, lock13, lock14, lock15, lock16, lock17, lock18, lock19, lock20;
+unsigned long savedtime22 = 0; //delay for clear strip1
+unsigned long savedtime23 = 0; //delay for clear strip2
+bool lock, lock1, lock2, lock4, lock6, lock7, lock8, lock11, lock12, lock13, lock14, lock15, lock16, lock17, lock18, lock19, lock20, lock21, lock22;
 bool lock3 = 1;
 bool lock_button1, lock_button2;
+bool lockoff, lockoff1;
 bool onoff1, onoff;
 int rVal = 255; /* red led value is temporally 255 and it will be the first led to light up */
 int bVal;       /* blue led value is temporally 0 */
@@ -171,43 +174,94 @@ BLYNK_WRITE(V10)
 }
 void custommode_on1()
 {
+
+  if (actualtime - savedtime22 >= 1)
+  {
+    if (x <= NUM_LEDSs - 2)
+    {
+      x++;
+      ledss[x] = CRGB(0, 0, 0);
+    }
+    if (x == NUM_LEDSs - 2)
+    {
+      lock21 = 1;
+    }
+    savedtime22 = actualtime;
+  }
   if (lock11 == 1)
   {
     g = 0;
     delq1 = 10;
+    if (lockoff == 0)
+    {
+      lock21 = 1;
+      lockoff = 1;
+    }
+    else
+    {
+      x = -1;
+      lock21 = 0;
+    }
     lock11 = 0;
   }
-  if (actualtime - savedtime12 >= delq1)
+  if (lock21 == 1)
   {
-    if (g <= NUM_LEDSs - 2)
+    if (actualtime - savedtime12 >= delq1)
     {
-      g++;
-      ledss[g] = CRGB(red, green, blue);
+      if (g <= NUM_LEDSs - 2)
+      {
+        g++;
+        ledss[g] = CRGB(red, green, blue);
+      }
+      savedtime12 = actualtime;
     }
-    savedtime12 = actualtime;
-  }
-  for (int c = 0; c <= g; c++)
-  {
-    ledss[c] = CRGB(red, green, blue);
-  }
-  if (actualtime - savedtime13 >= deldel1)
-  {
-    if (g >= led_end1)
+    for (int c = 0; c <= g; c++)
     {
-      delq1 = delq1 + 5UL;
+      ledss[c] = CRGB(red, green, blue);
     }
-    savedtime13 = actualtime;
+    if (actualtime - savedtime13 >= deldel1)
+    {
+      if (g >= led_end1)
+      {
+        delq1 = delq1 + 5UL;
+      }
+      savedtime13 = actualtime;
+    }
   }
 }
 void fade_on1()
 {
+  if (actualtime - savedtime22 >= 1)
+  {
+    if (x <= NUM_LEDSs - 2)
+    {
+      x++;
+      ledss[x] = CRGB(0, 0, 0);
+    }
+    if (x == NUM_LEDSs - 2)
+    {
+      lock21 = 1;
+    }
+    savedtime22 = actualtime;
+  }
   if (lock12 == 1)
   {
     g = 0;
     delq1 = 10;
+    if (lockoff == 0)
+    {
+      lock21 = 1;
+      lockoff = 1;
+    }
+    else
+    {
+      x = -1;
+      lock21 = 0;
+    }
+
     lock12 = 0;
   }
-  if (mode == 2)
+  if (lock21 == 1)
   {
     if (actualtime - savedtime14 >= delq1)
     {
@@ -234,33 +288,59 @@ void fade_on1()
 }
 void rainbow_on1()
 {
+  if (actualtime - savedtime22 >= 1)
+  {
+    if (x <= NUM_LEDSs - 2)
+    {
+      x++;
+      ledss[x] = CRGB(0, 0, 0);
+    }
+    if (x == NUM_LEDSs - 2)
+    {
+      lock21 = 1;
+    }
+    savedtime22 = actualtime;
+  }
   if (lock13 == 1)
   {
     g = 0;
     delq1 = 10;
+    if (lockoff == 0)
+    {
+      lock21 = 1;
+      lockoff = 1;
+    }
+    else
+    {
+      x = -1;
+      lock21 = 0;
+    }
     lock13 = 0;
   }
-  if (actualtime - savedtime19 >= delq1)
+  if (lock21 == 1)
   {
-    if (g <= NUM_LEDSs - 1)
+    if (actualtime - savedtime19 >= delq1)
     {
-      g++;
+      if (g <= NUM_LEDSs - 1)
+      {
+        g++;
+      }
+      savedtime19 = actualtime;
     }
-    savedtime19 = actualtime;
-  }
-  fill_rainbow(ledss, g, gHue1, 7);
-  if (actualtime - savedtime20 >= deldel1)
-  {
-    if (g >= led_end1)
+    fill_rainbow(ledss, g, gHue1, 7);
+    if (actualtime - savedtime20 >= deldel1)
     {
-      delq1 = delq1 + 5UL;
+      if (g >= led_end1)
+      {
+        delq1 = delq1 + 5UL;
+      }
+      savedtime20 = actualtime;
     }
-    savedtime20 = actualtime;
-  }
-  if (actualtime - savedtime21 >= delay_rainbow)
-  {
-    gHue1++;
-    savedtime21 = actualtime;
+    if (actualtime - savedtime21 >= delay_rainbow)
+    {
+      gHue1++;
+      savedtime21 = actualtime;
+    }
   }
 }
 void custommode_off1()
@@ -284,11 +364,13 @@ void custommode_off1()
     ledss[b] = CRGB(red, green, blue);
   }
   delq1 = 0;
+  lockoff = 0;
 }
 void fade_off1()
 {
   if (lock15 == 0)
   {
+    lockoff = 0;
     g = NUM_LEDSs - 1;
     lock15 = 1;
   }
@@ -306,6 +388,7 @@ void fade_off1()
     ledss[b] = CRGB(rVal, gVal, bVal);
   }
   delq1 = 0;
+  lockoff = 0;
 }
 void rainbow_off1()
 {
@@ -330,47 +413,97 @@ void rainbow_off1()
     savedtime21 = actualtime;
   }
   delq1 = 0;
+  lockoff = 0;
 }
 
 void custommode_on()
 {
+  if (actualtime - savedtime23 >= 1)
+  {
+    if (y <= NUM_LEDS - 2)
+    {
+      y++;
+      leds[y] = CRGB(0, 0, 0);
+    }
+    if (y == NUM_LEDS - 2)
+    {
+      lock22 = 1;
+    }
+    savedtime23 = actualtime;
+  }
   if (lock == 1)
   {
     i = 0;
     delq = 10;
+    if (lockoff1 == 0)
+    {
+      lock22 = 1;
+      lockoff1 = 1;
+    }
+    else
+    {
+      y = -1;
+      lock22 = 0;
+    }
     lock = 0;
   }
-  if (actualtime - savedtime1 >= delq)
+  if (lock21 == 1)
   {
-    if (i <= NUM_LEDS - 2)
+    if (actualtime - savedtime1 >= delq)
     {
-      i++;
-      leds[i] = CRGB(red, green, blue);
+      if (i <= NUM_LEDS - 2)
+      {
+        i++;
+        leds[i] = CRGB(red, green, blue);
+      }
+      savedtime1 = actualtime;
     }
-    savedtime1 = actualtime;
-  }
-  for (int b = 0; b <= i; b++)
-  {
-    leds[b] = CRGB(red, green, blue);
-  }
-  if (actualtime - savedtime2 >= deldel)
-  {
-    if (i >= led_end)
+    for (int b = 0; b <= i; b++)
     {
-      delq = delq + 5UL;
+      leds[b] = CRGB(red, green, blue);
     }
-    savedtime2 = actualtime;
+    if (actualtime - savedtime2 >= deldel)
+    {
+      if (i >= led_end)
+      {
+        delq = delq + 5UL;
+      }
+      savedtime2 = actualtime;
+    }
   }
 }
 void fade_on()
 {
+  if (actualtime - savedtime23 >= 1)
+  {
+    if (y <= NUM_LEDS - 2)
+    {
+      y++;
+      leds[y] = CRGB(0, 0, 0);
+    }
+    if (y == NUM_LEDS - 2)
+    {
+      lock22 = 1;
+    }
+    savedtime23 = actualtime;
+  }
   if (lock1 == 1)
   {
     i = 0;
     delq = 10;
+        if (lockoff1 == 0)
+    {
+      lock22 = 1;
+      lockoff1 = 1;
+    }
+    else
+    {
+      y = -1;
+      lock22 = 0;
+    }
     lock1 = 0;
   }
-  if (mode == 2)
+  if (lock21 == 1)
   {
     if (actualtime - savedtime3 >= delq)
     {
@@ -397,33 +530,59 @@ void fade_on()
 }
 void rainbow_on()
 {
+  if (actualtime - savedtime23 >= 1)
+  {
+    if (y <= NUM_LEDS - 2)
+    {
+      y++;
+      leds[y] = CRGB(0, 0, 0);
+    }
+    if (y == NUM_LEDS - 2)
+    {
+      lock22 = 1;
+    }
+    savedtime23 = actualtime;
+  }
   if (lock2 == 1)
   {
     i = 0;
     delq = 10;
+        if (lockoff1 == 0)
+    {
+      lock22 = 1;
+      lockoff1 = 1;
+    }
+    else
+    {
+      y = -1;
+      lock22 = 0;
+    }
     lock2 = 0;
   }
-  if (actualtime - savedtime8 >= delq)
+  if (lock21 == 1)
   {
-    if (i <= NUM_LEDS - 1)
+    if (actualtime - savedtime8 >= delq)
     {
-      i++;
+      if (i <= NUM_LEDS - 1)
+      {
+        i++;
+      }
+      savedtime8 = actualtime;
     }
-    savedtime8 = actualtime;
-  }
-  fill_rainbow(leds, i, gHue, 7);
-  if (actualtime - savedtime9 >= deldel)
-  {
-    if (i >= led_end)
+    fill_rainbow(leds, i, gHue, 7);
+    if (actualtime - savedtime9 >= deldel)
     {
-      delq = delq + 5UL;
+      if (i >= led_end)
+      {
+        delq = delq + 5UL;
+      }
+      savedtime9 = actualtime;
     }
-    savedtime9 = actualtime;
-  }
-  if (actualtime - savedtime10 >= delay_rainbow)
-  {
-    gHue++;
-    savedtime10 = actualtime;
+    if (actualtime - savedtime10 >= delay_rainbow)
+    {
+      gHue++;
+      savedtime10 = actualtime;
+    }
   }
 }
 void custommode_off()
@@ -447,6 +606,7 @@ void custommode_off()
     leds[b] = CRGB(red, green, blue);
   }
   delq = 10;
+  lockoff1=0;
 }
 void fade_off()
 {
@@ -469,6 +629,7 @@ void fade_off()
     leds[b] = CRGB(rVal, gVal, bVal);
   }
   delq = 10;
+  lockoff1=0;
 }
 void rainbow_off()
 {
@@ -493,6 +654,7 @@ void rainbow_off()
     savedtime10 = actualtime;
   }
   delq = 10;
+  lockoff1=0;
 }
 
 void loop()
@@ -595,26 +757,26 @@ void loop()
   {
     rainbow_off1();
   }
-    if (analogRead(A0) <= 20 && lock3 == 0 && digitalRead(pcstate) == 1) //max 1024 && photoresistor
+  if (analogRead(A0) <= 20 && lock3 == 0 && digitalRead(pcstate) == 1) //max 1024 && photoresistor
+  {
+    if (lock_button1 == 1)
     {
-      if (lock_button1 == 1)
-      {
-        onoff = 1;
-      }
-      if (lock_button2 == 1)
-      {
-        onoff1 = 1;
-      }
-      lock3 = 1;
-      lock4 = 0;
+      onoff = 1;
     }
-    else if (analogRead(A0) >= 100 && lock4 == 0 || digitalRead(pcstate) == 0 && lock4 == 0)
+    if (lock_button2 == 1)
     {
-      onoff = 0;
-      onoff1 = 0;
-      lock3 = 0;
-      lock4 = 1;
+      onoff1 = 1;
     }
+    lock3 = 1;
+    lock4 = 0;
+  }
+  else if (analogRead(A0) >= 100 && lock4 == 0 || digitalRead(pcstate) == 0 && lock4 == 0)
+  {
+    onoff = 0;
+    onoff1 = 0;
+    lock3 = 0;
+    lock4 = 1;
+  }
 
   if (digitalRead(ttp223) == HIGH)
   {

@@ -21,4 +21,3 @@ You can use arduino IDE or Visual Studio Code with platorm IO. (If you are going
 - photoresistor x1
 - resistor (1k, 2k2, 3k3)
 - USB cable 
-
