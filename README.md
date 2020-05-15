@@ -4,9 +4,14 @@
 1. I used Blynk to administration of my project. You have to create your own local server or buy energy on an official server.
 2. QR code project:
 ![QR-code](/images/qr_code.jpg)
+
 3. Scheme:
+
 ![Schemat](/images/schemat.png)
-4. Code used for esp8266 [(LINK)](https://github.com/Firemanpl/ws2812b-automatic-on-lights/blob/master/src/main.cpp).
+
+4.Export your blynk token. Paste your token, WiFi SSID and  paste to code.
+
+5. Code used for esp8266 [(LINK)](https://github.com/Firemanpl/ws2812b-automatic-on-lights/blob/master/src/main.cpp).
 You can use arduino IDE or Visual Studio Code with platorm IO. (If you are going to use VS code with platform IO you can just copy the whole project and paste it as a new project)
 
                 
