@@ -9,7 +9,7 @@
 
 ![Schemat](/images/schemat.png)
 
-4.Export your blynk token. Paste your token, WiFi SSID and  paste to code.
+4.Export your blynk token. Copy your token, WiFi SSID and  paste to code.
 
 5. Code used for esp8266 [(LINK)](https://github.com/Firemanpl/ws2812b-automatic-on-lights/blob/master/src/main.cpp).
 You can use arduino IDE or Visual Studio Code with platorm IO. (If you are going to use VS code with platform IO you can just copy the whole project and paste it as a new project)
