@@ -59,7 +59,7 @@ unsigned long savedtime20 = 0; //rainbow
 unsigned long savedtime21 = 0; //rainbow- delay
 unsigned long savedtime22 = 0; //delay for clear strip1
 unsigned long savedtime23 = 0; //delay for clear strip2
-bool lock, lock1, lock2, lock4, lock6, lock7, lock8, lock11, lock12, lock13, lock14, lock15, lock16, lock17, lock18, lock19, lock20, lock21, lock22;
+bool lock, lock1, lock2, lock4, lock11, lock12, lock13, lock17, lock18, lock19, lock20, lock21, lock22;
 bool lock3 = 1;
 bool lock_button1, lock_button2;
 bool lockoff, lockoff1;
@@ -345,11 +345,7 @@ void rainbow_on1()
 }
 void custommode_off1()
 {
-  if (lock14 == 0)
-  {
-    g = NUM_LEDSs - 1;
-    lock14 = 1;
-  }
+
   if (actualtime - savedtime18 >= deloff1)
   {
     if (g >= 0)
@@ -368,12 +364,7 @@ void custommode_off1()
 }
 void fade_off1()
 {
-  if (lock15 == 0)
-  {
-    lockoff = 0;
-    g = NUM_LEDSs - 1;
-    lock15 = 1;
-  }
+
   if (actualtime - savedtime14 >= deloff1)
   {
     if (g >= 0)
@@ -392,11 +383,6 @@ void fade_off1()
 }
 void rainbow_off1()
 {
-  if (lock16 == 0)
-  {
-    g = NUM_LEDSs - 1;
-    lock16 = 1;
-  }
   if (actualtime - savedtime19 >= deloff1)
   {
     if (g >= 0)
@@ -587,11 +573,7 @@ void rainbow_on()
 }
 void custommode_off()
 {
-  if (lock6 == 0)
-  {
-    i = NUM_LEDS - 1;
-    lock6 = 1;
-  }
+
   if (actualtime - savedtime7 >= deloff)
   {
     if (i >= 0)
@@ -610,11 +592,6 @@ void custommode_off()
 }
 void fade_off()
 {
-  if (lock7 == 0)
-  {
-    i = NUM_LEDS - 1;
-    lock7 = 1;
-  }
   if (actualtime - savedtime3 >= deloff)
   {
     if (i >= 0)
@@ -633,11 +610,6 @@ void fade_off()
 }
 void rainbow_off()
 {
-  if (lock8 == 0)
-  {
-    i = NUM_LEDS - 1;
-    lock8 = 1;
-  }
   if (actualtime - savedtime8 >= deloff)
   {
     if (i >= 0)
@@ -671,18 +643,6 @@ void loop()
     Blynk.connect();
     digitalWrite(relay, HIGH);
     digitalWrite(relay1, HIGH);
-  }
-  if (onoff == 1)
-  {
-    lock6 = 0;
-    lock7 = 0;
-    lock8 = 0;
-  }
-  if (onoff1 == 1)
-  {
-    lock14 = 0;
-    lock15 = 0;
-    lock16 = 0;
   }
   if (onoff == 1 && mode == 1)
   {
