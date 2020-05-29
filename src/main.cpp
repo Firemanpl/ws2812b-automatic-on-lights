@@ -174,7 +174,6 @@ BLYNK_WRITE(V10)
 }
 void custommode_on1()
 {
-
   if (actualtime - savedtime22 >= 1)
   {
     if (x <= NUM_LEDSs - 2)
@@ -345,7 +344,6 @@ void rainbow_on1()
 }
 void custommode_off1()
 {
-
   if (actualtime - savedtime18 >= deloff1)
   {
     if (g >= 0)
@@ -573,7 +571,6 @@ void rainbow_on()
 }
 void custommode_off()
 {
-
   if (actualtime - savedtime7 >= deloff)
   {
     if (i >= 0)
